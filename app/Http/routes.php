@@ -79,3 +79,6 @@ Route::get('laporan', 'LaporanController@createLaporan');
 Route::get('/isiVolume', 'MainController@getIsiVolume');
 Route::post('/isiVolume', 'MainController@postIsiVolume');
 
+//ASSIGN SARANA
+Route::get('/assignSarana', 'MainController@getPenjadwalanSarana');
+Route::post('/assignSarana', 'MainController@postPenjadwalanSarana');

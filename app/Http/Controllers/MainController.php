@@ -128,5 +128,30 @@ use Request;
 		public function laporan(){
 			return view('laporan');
 		}
+		public function getPenjadwalanSarana() {
+			$tpa = DB::select('SELECT * from tpa');
+			$tps = DB::select('SELECT * from tps');
+			$sarana = DB::select('SELECT * from sarana');
+			return view('formIsiVolume')->with('tpa', $tpa)->with('tps', $tps)->with('sarana', $sarana);
+		}
+		public function postPenjadwalanSarana() {
+			$jenis = Request::get("jenis");
+			$plat = Request::get("plat");
+			$jadwal = Request::get("jadwal");
+			$tempat = 'tps';
+			/* Cek TPA atau TPS beserta voluemnya */
+			if (sizeof($hasil = (DB::select('SELECT volume from tpa WHERE nama = ?', [$input]))) != 0) {
+				$tempat = 'tpa';
+			}
+			
+			DB::table('jadwal_pengangkutan')->insert(array(
+			    array('jenis' => $jenis, 'plat' => $plat, 'jadwal' => $jadwal, 'tempat' => $tempat)
+			));
+			//return
+			$tpa = DB::select('SELECT * from tpa');
+			$tps = DB::select('SELECT * from tps');
+			$sarana = DB::select('SELECT * from sarana');
+			return view('formIsiVolume')->with('tpa', $tpa)->with('tps', $tps)->with('sarana', $sarana);
+		}
 	}
 ?>
