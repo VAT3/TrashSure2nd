@@ -132,7 +132,8 @@ use Request;
 			$tpa = DB::select('SELECT * from tpa');
 			$tps = DB::select('SELECT * from tps');
 			$sarana = DB::select('SELECT * from sarana');
-			return view('formIsiVolume')->with('tpa', $tpa)->with('tps', $tps)->with('sarana', $sarana);
+			$mytime = Carbon::now()->addDay()->toDateString();
+			return view('formPenjadwalanSarana')->with('Date', $mytime)->with('TPA', $tpa)->with('TPS', $tps)->with('sarana', $sarana);
 		}
 		public function postPenjadwalanSarana() {
 			$jenis = Request::get("jenis");
@@ -151,7 +152,7 @@ use Request;
 			$tpa = DB::select('SELECT * from tpa');
 			$tps = DB::select('SELECT * from tps');
 			$sarana = DB::select('SELECT * from sarana');
-			return view('formIsiVolume')->with('tpa', $tpa)->with('tps', $tps)->with('sarana', $sarana);
+			return view('formPenjadwalanSarana')->with('tpa', $tpa)->with('tps', $tps)->with('sarana', $sarana);
 		}
 	}
 ?>

@@ -20,7 +20,7 @@
                       </a>
                   </li>
                   <li class="sub-menu">
-                      <a href="laporan.html" >
+                      <a href="{{url('laporan')}}" >
                           <i class="fa fa-file"></i>
                           <span>Laporan</span>
                       </a>

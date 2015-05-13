@@ -1,4 +1,21 @@
 <?php
+//Connect Database Jorok
+
+	// mysqli object that we will use 
+	$config = array(
+			'host' => 'localhost',
+			'database' => 'trashsure',
+			'username' => 'root',
+			'password' => ''
+		);
+	$conn = mysqli_connect($config["host"], $config["username"], $config["password"], $config["database"]);
+	if (!$conn) {
+			die("Error " . mysqli_errno($conn) . ": " . mysqli_error($conn));
+		}
+
+
+
+
 PDF::AddPage();
 
 PDF::SetFont('helvetica', '', 15);
@@ -25,20 +42,50 @@ PDF::SetFont('helvetica', 'B', 18);
 PDF::Write(0, 'Data Singkat', '', 0, 'L', true, 0, false, false, 0);
 
 PDF::SetFont('helvetica', '', 11);
+
+$sql = "SELECT COUNT(*) FROM `tpa`";
+$result = $conn->query($sql);
+$row = mysqli_fetch_assoc($result);
+$jumTPA = $row["COUNT(*)"];
+
+$sql = "SELECT COUNT(*) FROM `tps`";
+$result = $conn->query($sql);
+$row = mysqli_fetch_assoc($result);
+$jumTPS = $row["COUNT(*)"];
+
+$sql = "SELECT COUNT(*) FROM `sarana`";
+$result = $conn->query($sql);
+$row = mysqli_fetch_assoc($result);
+$jumSarana = $row["COUNT(*)"];
+
+$sql = "SELECT COUNT(*) FROM `petugas`";
+$result = $conn->query($sql);
+$row = mysqli_fetch_assoc($result);
+$jumPetugas = $row["COUNT(*)"];
+
+$sql = "SELECT SUM(`volume`) FROM `tpa`";
+$result = $conn->query($sql);
+$row = mysqli_fetch_assoc($result);
+$jumVolume = $row["SUM(`volume`)"];
+$sql = "SELECT SUM(`volume`) FROM `tps`";
+$result = $conn->query($sql);
+$row = mysqli_fetch_assoc($result);
+$jumVolume += $row["SUM(`volume`)"];
+
 $html = '
 <div>
 	<br>
 	<table border="1" cellspacing="3" cellpadding="4" style="width:280px;">
 		<tr>
-			<td>Jumlah TPA: 4</td>
-			<td>Jumlah TPS: 5</td>
+			<td>Jumlah TPA: '.$jumTPA.'</td>
+			<td>Jumlah TPS: '.$jumTPS.'</td>
 		</tr>
 		<tr>
-			<td>Jumlah Sarana: 34</td>
-			<td>Jumlah Petugas: 87</td>
+			<td>Jumlah Sarana: '.$jumSarana.'</td>
+			<td>Jumlah Petugas: '.$jumPetugas.'</td>
 		</tr>
 		<tr>
-			<td colspan="2">Volume Sampah yang Diolah Bulan ini: 0 ltr</td>
+			<td colspan="2">Volume Sampah yang Diolah Bulan ini: '.$jumVolume.' ltr</td>
 
 		</tr>
 	</table>
@@ -51,6 +98,11 @@ PDF::SetFont('helvetica', 'B', 18);
 PDF::Write(0, 'Data TPA', '', 0, 'L', true, 0, false, false, 0);
 
 PDF::SetFont('helvetica', '', 11);
+
+$sql = "SELECT * FROM `tpa`";
+$result = $conn->query($sql);
+
+
 $html = '
 <div>
 	<br>
@@ -59,28 +111,17 @@ $html = '
 			<td>Nama</td>
 			<td>Lokasi</td>
 			<td>Volume</td>
-		</tr>
-		<tr>
-			<td>Tempat Sampah ITB</td>
-			<td>ITB</td>
-			<td>0 lt</td>
-		</tr>
-		<tr>
-			<td>Tempat Sampah UGM</td>
-			<td>UGM</td>
-			<td>0 lt</td>
-		</tr>
-		<tr>
-			<td>Tempat Sampah Bonbon</td>
-			<td>Bonbon</td>
-			<td>0 lt</td>
-		</tr>
-		<tr>
-			<td>Tempat Sampah Tangerang</td>
-			<td>Tangerang</td>
-			<td>0 lt</td>
-		</tr>
-		
+		</tr>';
+
+while($row = mysqli_fetch_assoc($result)) {
+	$html .= 	'<tr>
+					<td>'.$row['nama'].'</td>
+					<td>'.$row['lokasi'].'</td>
+					<td>'.$row['volume'].' lt</td>
+				</tr>' ;        
+}
+
+$html .='		
 	</table>
 </div>
 ';

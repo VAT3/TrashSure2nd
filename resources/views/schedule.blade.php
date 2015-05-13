@@ -21,7 +21,7 @@
                       </a>
                   </li>
                   <li class="sub-menu">
-                      <a href="laporan.html" >
+                      <a href="{{url('laporan')}}" >
                           <i class="fa fa-file"></i>
                           <span>Laporan</span>
                       </a>
@@ -33,7 +33,7 @@
                       </a>
                       <ul class="sub">
                           <li><a  href="{{'schedule'}}">Petugas</a></li>
-                          <li><a  href="pengangkutan.html">Pengangkutan</a></li>
+                          <li><a  href="{{url('isiSarana')}}">Pengangkutan</a></li>
                       </ul>
                   </li>
                   <li class="sub-menu">
@@ -56,7 +56,7 @@
       <!--main content start-->
       <section id="main-content">
           <section class="wrapper site-min-height">
-            <h3><i class="fa fa-angle-right"></i> Penjadwalan</h3>
+            <h3><i class="fa fa-angle-right"></i> <a href="{{'dinas'}}">Dashboard</a> / Penjadwalan Petugas</h3>
             <div class="row mt">
                   <div class="col-md-12">
                       <div class="content-panel">

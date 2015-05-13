@@ -73,12 +73,12 @@ Route::get('/delSarana/{id}', 'DelController@DelSarana');
 Route::get('/delPetugas/{id}', 'DelController@DelPetugas');
 
 
-Route::get('laporan', 'LaporanController@createLaporan');
+Route::get('/laporan', 'LaporanController@createLaporan');
 
 //ISI VOLUME
 Route::get('/isiVolume', 'MainController@getIsiVolume');
 Route::post('/isiVolume', 'MainController@postIsiVolume');
 
 //ASSIGN SARANA
-Route::get('/assignSarana', 'MainController@getPenjadwalanSarana');
-Route::post('/assignSarana', 'MainController@postPenjadwalanSarana');
+Route::get('/isiSarana', 'MainController@getPenjadwalanSarana');
+Route::post('/isiSarana', 'MainController@postPenjadwalanSarana');
