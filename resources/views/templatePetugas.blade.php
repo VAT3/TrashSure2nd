@@ -59,43 +59,6 @@ Use : SB-Admin 1.0.2 template
         </header>
       <!--header end-->
       
-      <!-- **********************************************************************************************************************************************************
-      MAIN SIDEBAR MENU
-      *********************************************************************************************************************************************************** -->
-      <!--sidebar start-->
-      <aside>
-          <div id="sidebar"  class="nav-collapse ">
-              <!-- sidebar menu start-->
-              <ul class="sidebar-menu" id="nav-accordion">
-              
-                  <p class="centered"><img src="{{asset('img/ui-sam.jpg')}}" class="img-circle" width="60"></p>
-                  <h5 class="centered"><?php echo Session::get('name')?></h5>
-                    
-                  <li class="mt">
-                      <a class="active" href="{{url('TrashSure')}}">
-                          <i class="fa fa-dashboard"></i>
-                          <span>Dashboard</span>
-                      </a>
-                  </li>
-                  <li class="sub-menu">
-                      <a href="jadwal.html" >
-                          <i class="fa fa-calendar"></i>
-                          <span>Jadwal</span>
-                      </a>
-                  </li>
-                  <li class="sub-menu">
-                      <a href="volume.html" >
-                          <i class="fa fa-download"></i>
-                          <span>Volume</span>
-                      </a>
-                  </li>
-              </ul>
-              <!-- sidebar menu end-->
-          </div>
-      </aside>
-      <!--sidebar end-->
-      
-      <!-- MAIN CONTENT -->
       @yield('content')
                   
       <!--main content end-->

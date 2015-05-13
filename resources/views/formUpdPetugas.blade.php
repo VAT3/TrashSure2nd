@@ -2,7 +2,45 @@
 
 
 @section('content')
-<!-- **********************************************************************************************************************************************************
+      <!-- **********************************************************************************************************************************************************
+      MAIN SIDEBAR MENU
+      *********************************************************************************************************************************************************** -->
+      <!--sidebar start-->
+      <aside>
+          <div id="sidebar"  class="nav-collapse ">
+              <!-- sidebar menu start-->
+              <ul class="sidebar-menu" id="nav-accordion">
+              
+                  <p class="centered"><img src="{{asset('img/ui-sam.jpg')}}" class="img-circle" width="60"></p>
+                  <h5 class="centered"><?php echo Session::get('name')?></h5>
+                    
+                  <li class="mt">
+                      <a href="{{url('admin')}}">
+                          <i class="fa fa-dashboard"></i>
+                          <span>Dashboard</span>
+                      </a>
+                  </li>
+                  <li class="sub-menu">
+                      <a class="active" href="javascript:;" >
+                          <i class="fa fa-folder-open"></i>
+                          <span>Inventaris</span>
+                      </a>
+                      <ul class="sub">
+                          <li><a  href="{{url('inventoryTPA')}}">TPA</a></li>
+                          <li><a  href="{{url('inventoryTPS')}}">TPS</a></li>
+                          <li><a  href="{{url('inventorySarana')}}">Sarana</a></li>
+                          <li><a  href="{{url('inventoryPetugas')}}">Petugas</a></li>
+                      </ul>
+                  </li>
+              </ul>
+              <!-- sidebar menu end-->
+          </div>
+      </aside>
+      <!--sidebar end-->
+      
+      <!-- MAIN CONTENT -->
+
+      <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
       <!--main content start-->

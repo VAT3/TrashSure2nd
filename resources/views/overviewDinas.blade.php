@@ -2,6 +2,54 @@
 
 @section('content')
       <!-- **********************************************************************************************************************************************************
+      MAIN SIDEBAR MENU
+      *********************************************************************************************************************************************************** -->
+      <!--sidebar start-->
+      <aside>
+          <div id="sidebar"  class="nav-collapse ">
+              <!-- sidebar menu start-->
+              <ul class="sidebar-menu" id="nav-accordion">
+              
+                  <p class="centered"><img src="{{asset('img/ui-sam.jpg')}}" class="img-circle" width="60"></p>
+                  <h5 class="centered"><?php echo Session::get('name')?></h5>
+                    
+                  <li class="mt">
+                      <a  class="active" href="{{url('dinas')}}">
+                          <i class="fa fa-dashboard"></i>
+                          <span>Dashboard</span>
+                      </a>
+                  </li>
+                  <li class="sub-menu">
+                      <a href="laporan.html" >
+                          <i class="fa fa-file"></i>
+                          <span>Laporan</span>
+                      </a>
+                  </li>
+                  <li class="sub-menu">
+                      <a  href="javascript:;" >
+                          <i class="fa fa-list-alt"></i>
+                          <span>Penjadwalan</span>
+                      </a>
+                      <ul class="sub">
+                          <li><a  href="{{'schedule'}}">Petugas</a></li>
+                          <li><a  href="pengangkutan.html">Pengangkutan</a></li>
+                      </ul>
+                  </li>
+                  <li class="sub-menu">
+                      <a href="{{url('viewSchedule')}}" >
+                          <i class="fa fa-calendar"></i>
+                          <span>Jadwal</span>
+                      </a>
+                  </li>
+              </ul>
+              <!-- sidebar menu end-->
+          </div>
+      </aside>
+      <!--sidebar end-->
+      
+      <!-- MAIN CONTENT -->
+
+      <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
       <!--main content start-->

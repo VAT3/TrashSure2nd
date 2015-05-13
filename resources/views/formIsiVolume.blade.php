@@ -1,59 +1,89 @@
-@extends('admin')
+@extends('templatePetugas')
 
 
 @section('content')
-<!-- Main Page -->
-<div id="page-wrapper">
-	<div class="container-fluid">
-		<!-- Page Heading -->
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">
-                    Isi Volume TPS/TPA
-                </h1>
-                <ol class="breadcrumb">
-                    <li>
-                        <i class="fa fa-dashboard"></i>  <a href="{{'TrashSure'}}">Dashboard</a>
-                    </li>
-                    <li class="active">
-                        <i class="fa fa-edit"></i> Isi Volume
-                    </li>
-                </ol>
-            </div>
-        </div>
+      <!-- **********************************************************************************************************************************************************
+      MAIN SIDEBAR MENU
+      *********************************************************************************************************************************************************** -->
+      <!--sidebar start-->
+      <aside>
+          <div id="sidebar"  class="nav-collapse ">
+              <!-- sidebar menu start-->
+              <ul class="sidebar-menu" id="nav-accordion">
+              
+                  <p class="centered"><img src="{{asset('img/ui-sam.jpg')}}" class="img-circle" width="60"></p>
+                  <h5 class="centered"><?php echo Session::get('name')?></h5>
+                    
+                  <li class="mt">
+                      <a href="{{url('petugas')}}">
+                          <i class="fa fa-dashboard"></i>
+                          <span>Dashboard</span>
+                      </a>
+                  </li>
+                  <li class="sub-menu">
+                      <a href="{{url('viewSchedule')}}" >
+                          <i class="fa fa-calendar"></i>
+                          <span>Jadwal</span>
+                      </a>
+                  </li>
+                  <li class="sub-menu">
+                      <a class="active" href="{{url('isiVolume')}}" >
+                          <i class="fa fa-download"></i>
+                          <span>Volume</span>
+                      </a>
+                  </li>
+              </ul>
+              <!-- sidebar menu end-->
+          </div>
+      </aside>
+      <!--sidebar end-->
+      
+      <!-- MAIN CONTENT -->
 
-        <div class="row">
-            <div class="col-lg-3">
-            </div>
-            <div class="col-lg-6">
-            	<form method="post">
-	            	<div class="form-group">
-	                    <label>Nama TPS/TPA</label>
-	                    <select name="lokasi" class="form-control">
-	                    	<option selected>Lokasi</option>
-                            <optgroup label="---TPA---"></optgroup>
-                            @foreach ($tpa as $tpaElement)
-                            <option>{{$tpaElement->nama}}</option>
-                            @endforeach
-                            <optgroup label="---TPS---"></optgroup>
-                            @foreach ($tps as $tpsElement)
-                            <option>{{$tpsElement->nama}}</option>
-                            @endforeach
-	                    </select>
-	                </div>
-	                <div class="form-group">
-	                    <label>Volume TPS/TPA</label>
-	                    <input class="form-control" name="volume" placeholder="Contoh: 200 liter">
-	                </div>
-	                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-	                <input type="submit" class="btn btn-primary" value="Submit">
-	                <input type="reset" class="btn btn-primary" value="Reset">
-	            </form>
-            </div>
-            <div class="col-lg-3">
-            </div>
-        </div>
-	</div>
-</div>
-
+      <!-- **********************************************************************************************************************************************************
+      MAIN CONTENT
+      *********************************************************************************************************************************************************** -->
+      <!--main content start-->
+      <section id="main-content">
+          <section class="wrapper site-min-height">
+            <h3><i class="fa fa-angle-right"></i><a href="{{url('petugas')}}">Dashboard</a> / Isi Volume</h3>
+            <div class="row mt">
+                  <div class="col-md-12">
+                      <form method="post">
+                        <div class="modal-content">
+                            <div class="modal-header"> 
+                              <h4 class="modal-title" id="editModalLabel">Isi Volume</h4>
+                            </div>
+                            <div class="modal-body">
+                                <input name="_token" hidden value="{!! csrf_token() !!}" />
+                                <div class="form-group">
+                                    <label for="recipient-name" class="control-label">Nama TPS/TPA:</label>
+                                    <select name="lokasi" class="form-control">
+                                        <option selected>Lokasi</option>
+                                        <optgroup label="---TPA---"></optgroup>
+                                        @foreach ($tpa as $tpaElement)
+                                        <option>{{$tpaElement->nama}}</option>
+                                        @endforeach
+                                        <optgroup label="---TPS---"></optgroup>
+                                        @foreach ($tps as $tpsElement)
+                                        <option>{{$tpsElement->nama}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="recipient-name" class="control-label">Volume TPS/TPA:</label>
+                                    <input type="text" class="form-control" id="recipient-name" name="volume" placeholder="<?php echo Session::get('volumeTPA')?>">
+                                </div>
+                            </div>
+                          <div class="modal-footer">
+                            <button type="reset" class="btn btn-default" data-dismiss="modal" style="margin-left:0px;">Reset</button>
+                            <button type="submit" class="btn btn-default">Simpan</button>
+                          </div>
+                        </div>
+                        </form>
+                  </div><!-- /col-md-12 -->
+              </div><!-- /row -->
+      
+    </section><!--/wrapper -->
+      </section><!-- /MAIN CONTENT -->
 @endsection
