@@ -143,7 +143,8 @@ use Session;
 			$tps = DB::select('SELECT * from tps');
 			$sarana = DB::select('SELECT * from sarana');
 			$mytime = Carbon::now('Asia/Jakarta')->addDay()->toDateString();
-			return view('formPenjadwalanSarana')->with('Date', $mytime)->with('TPA', $tpa)->with('TPS', $tps)->with('sarana', $sarana);
+			$mytime2 = Carbon::now('Asia/Jakarta')->toDateString();
+			return view('formPenjadwalanSarana')->with('Date', $mytime)->with('Date2', $mytime2)->with('TPA', $tpa)->with('TPS', $tps)->with('sarana', $sarana);
 		}
 		public function postPenjadwalanSarana() {
 			$jenis = Request::get("jenis");

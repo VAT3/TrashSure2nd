@@ -77,7 +77,6 @@
                                   <form role="form" method="post" action="/assignSchedule">
                                   <input name="_token" hidden value="{!! csrf_token() !!}" />
                                   <td>
-                                      
                                       <select class="form-control placeholder" name="tanggal" type="text">
                                       <option>Tanggal</option>
                                         <option>{{$Date}}</option>
