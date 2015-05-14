@@ -9,6 +9,7 @@ use App\Quotation;
 use Carbon\Carbon;
 use DB;
 use Request;
+use Session;
 	class MainController extends Controller {
 		public function __construct()
 		{
@@ -75,29 +76,38 @@ use Request;
 			$Petugas = Petugas::all();
 			$TPA = TPA::all();
 			$TPS = TPS::all();
-			$mytime = Carbon::now()->addDay()->toDateString();
-			return view('schedule')->with('Date', $mytime)->with('Petugas', $Petugas)->with('TPA', $TPA)->with('TPS', $TPS);
+			$mytime = Carbon::now('Asia/Jakarta')->addDay()->toDateString();
+			$mytime2 = Carbon::now('Asia/Jakarta')->toDateString();
+			return view('schedule')->with('Date', $mytime)->with('Date2', $mytime2)->with('Petugas', $Petugas)->with('TPA', $TPA)->with('TPS', $TPS);
 		}
 		public function postAssignSchedule(){
 			$input = Request::all();
 			$jadwal = new Jadwal();
 			$jadwal->fill($input)->save();
 
-			$mytime = Carbon::now()->addDay()->toDateString();
+			$mytime = Carbon::now('Asia/Jakarta')->addDay()->toDateString();
+			$mytime2 = Carbon::now('Asia/Jakarta')->toDateString();
 			$Petugas = Petugas::all();
 			$TPA = TPA::all();
 			$TPS = TPS::all();
-			return view('schedule')->with('Date', $mytime)->with('Petugas', $Petugas)->with('TPA', $TPA)->with('TPS', $TPS);
-			 // return response($input);
-			// return view('login');
+
+			return view('schedule')->with('Date', $mytime)->with('Date2', $mytime2)->with('Petugas', $Petugas)->with('TPA', $TPA)->with('TPS', $TPS);
 		}
 		public function viewSchedule(){
 			$Petugas = Petugas::all();
 			$TPA = TPA::all();
 			$TPS = TPS::all();
 			$Jadwal = Jadwal::all();
-			$mytime = Carbon::now()->toDateString();
+			$mytime = Carbon::now('Asia/Jakarta')->toDateString();
 			return view('viewSchedule')->with('Jadwal', $Jadwal)->with('Date', $mytime)->with('Petugas', $Petugas)->with('TPA', $TPA)->with('TPS', $TPS);
+		}
+		public function viewScheduleSelf(){
+			$Petugas = Petugas::all();
+			$TPA = TPA::all();
+			$TPS = TPS::all();
+			$Jadwal = DB::table('jadwal')->where('petugas', Session::get('name'))->get();
+			$mytime = Carbon::now('Asia/Jakarta')->toDateString();
+			return view('viewScheduleSelf')->with('Jadwal', $Jadwal)->with('Date', $mytime)->with('Petugas', $Petugas)->with('TPA', $TPA)->with('TPS', $TPS);
 		}
 		public function getIsiVolume() {
 			$tpa = DB::select('SELECT * from tpa');
@@ -132,7 +142,7 @@ use Request;
 			$tpa = DB::select('SELECT * from tpa');
 			$tps = DB::select('SELECT * from tps');
 			$sarana = DB::select('SELECT * from sarana');
-			$mytime = Carbon::now()->addDay()->toDateString();
+			$mytime = Carbon::now('Asia/Jakarta')->addDay()->toDateString();
 			return view('formPenjadwalanSarana')->with('Date', $mytime)->with('TPA', $tpa)->with('TPS', $tps)->with('sarana', $sarana);
 		}
 		public function postPenjadwalanSarana() {
