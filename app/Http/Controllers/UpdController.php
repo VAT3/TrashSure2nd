@@ -1,6 +1,7 @@
 <?php 
 namespace App\Http\Controllers;
 use Request;
+use DB;
 use Session;
 use App\TPA;
 use App\TPS;
@@ -74,10 +75,15 @@ use App\Petugas;
 		}
 		public function postUpdPetugas($id)
 		{
-			$input = Request::all();
-			// return response($input);
-			$petugas = Petugas::find($id);
-			$petugas->fill($input)->save();
+			$nama = Request::get("nama");
+			$nip = Request::get("nip");
+			$pekerjaan = Request::get("pekerjaan");
+			$username = Request::get("username");
+			$password = Request::get("password");
+
+			DB::table('petugas')
+				-> where ('id', $id)
+				-> update (['nama' => $nama, 'nip' => $nip, 'pekerjaan' => $pekerjaan, 'username' => $username, 'password' => $password]);
 			return redirect('inventoryPetugas');
 		}
 	}

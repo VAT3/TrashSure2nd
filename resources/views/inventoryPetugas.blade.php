@@ -71,7 +71,7 @@
                                   <td>{{$petugas->nip}}</td>
                                   <td>{{$petugas->pekerjaan}}</td>
                                   <td>{{$petugas->username}}</td>
-                                  <td>{{$petugas->username}}</td>
+                                  <td>{{$petugas->password}}</td>
                                   <td>
                                       <a href="{{'updPetugas/'.$petugas->id}}"><button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil"></i></button></a>
                                   </td>
@@ -92,7 +92,7 @@
                           <!-- Modal Tambah -->
                           <div class="modal fade" id="tambahModal" tabindex="-1" role="dialog" aria-labelledby="tambahModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
-                            <form method="post" action="/addPetugas">
+                            <form name="addPetugas" method="post" action="/addPetugas">
                               <div class="modal-content">
                                 <div class="modal-header">
                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -107,11 +107,11 @@
                                   </div>
                                   <div class="form-group">
                                     <label for="recipient-name" class="control-label">NIP:</label>
-                                    <input type="text" class="form-control" id="usernamex" name="nip">
+                                    <input type="text" class="form-control" id="nipx" name="nip">
                                   </div>
                                   <div class="form-group">
                                     <label for="recipient-name" class="control-label">Pekerjaan:</label>
-                                    <input type="text" class="form-control" id="usernamex" name="pekerjaan">
+                                    <input type="text" class="form-control" id="pekerjaanx" name="pekerjaan">
                                   </div>
                                   <div class="form-group">
                                     <label for="recipient-name" class="control-label">Username:</label>
@@ -119,18 +119,17 @@
                                   </div>
                                   <div class="form-group">
                                     <label for="recipient-name" class="control-label">Password:</label>
-                                    <input type="text" class="form-control" id="usernamex" name="password">
+                                    <input type="password" class="form-control" id="passx" name="password">
                                   </div>
                                   <div class="form-group">
                                     <label for="recipient-name" class="control-label">Ulangi Password:</label>
-                                    <input type="text" class="form-control" id="usernamex">
+                                    <input type="password" class="form-control" id="cpassx" name="cpassword">
                                   </div>
-                                  <input name="volume" hidden value="0" />
                                 </div>
                               
                                 <div class="modal-footer">
                                   <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left:0px;">Tutup</button>
-                                  <input type="submit" class="btn btn-default" value="Simpan">
+                                  <input type="submit" onclick="return validateForm()" class="btn btn-default" value="Simpan">
                                 </div>
                               </div>
                             </form>
@@ -144,6 +143,119 @@
                   </div><!-- /col-md-12 -->
               </div><!-- /row -->
       
-    </section><! --/wrapper -->
+    </section><!--/wrapper -->
       </section><!-- /MAIN CONTENT -->
+
+      <script type="text/javascript">
+      function validateForm() {
+        var form = [document.forms["addPetugas"]["nama"].value, document.forms["addPetugas"]["nip"].value, document.forms["addPetugas"]["pekerjaan"].value, document.forms["addPetugas"]["username"].value, document.forms["addPetugas"]["password"].value, document.forms["addPetugas"]["cpassword"].value];
+        var text = "";
+        var count = 0;
+        var it = 0;
+        for (var i = 0; i < 5; i++) { //increment count
+          if (form[i] == null || form[i] == "") {
+            count++;
+          }
+        }
+        it = count;
+        if (count == 1) { //kasus 1 count
+          for (var i = 0; i < 5; i++) { //count dependent
+            switch(i) {
+              case 0:
+                text = "Nama";
+                break;
+              case 1:
+                text = "NIP";
+                break;
+              case 2:
+                text = "Pekerjaan";
+                break;
+              case 3:
+                text = "Username";
+                break;
+              case 4:
+                text = "Password";
+                break;
+            }   
+          } 
+        }
+        else { //kasus lebih dari 1
+          for (var i = 0; i < 5; i++) {
+            if (form[i] == "" || form[i] == null) {
+              switch(i) {
+                case 0:
+                  text += "Nama";
+                  break;
+                case 1: 
+                  if (it == 1) { //sisa 1
+                    if (count == 1) {
+                      text += "NIP";
+                    }
+                    else {
+                      text += " dan NIP";
+                    }
+                  }
+                  else { //masih lebih dari 1
+                    if (text == "") text += "NIP";
+                    else text += ", NIP";
+                  }
+                  break;
+                case 2:
+                  if (it == 1) { //sisa 1
+                    if (count == 1) {
+                      text += "Pekerjaan";
+                    }
+                    else {
+                      text += " dan pekerjaan";
+                    }
+                  }
+                  else { //masih lebih dari 1
+                    if (text == "") text += "Pekerjaan";
+                    else text += ", pekerjaan";
+                  }
+                  break;
+                case 3:
+                  if (it == 1) { //sisa 1
+                    if (count == 1) {
+                      text += "Username";
+                    }
+                    else {
+                      text += " dan username";
+                    }
+                  }
+                  else { //masih lebih dari 1
+                    if (text == "") text += "Username";
+                    else text += ", username";
+                  }
+                  break;
+                case 4:
+                  if (it == 1) { //sisa 1
+                    if (count == 1) {
+                      text += "Password";
+                    }
+                    else if (count == 2) {
+                      text += " dan password";
+                    }
+                    else {
+                      if (text == "") text += "Password";
+                      else text += ", dan password";
+                    }
+                  }
+                  break;
+              }
+              it--;
+            }  
+          }
+        }
+        if (count > 0) {
+          alert(text + " tidak boleh kosong!");
+          return false;
+        }
+        //check password confirm
+        if (form[4] != form[5]) {
+          alert("Password dan confirm password harus sama!");
+          return false;
+        }
+      }
+      </script>
 @endsection
