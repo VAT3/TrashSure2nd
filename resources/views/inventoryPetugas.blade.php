@@ -125,7 +125,6 @@
                                     <label for="recipient-name" class="control-label">Ulangi Password:</label>
                                     <input type="text" class="form-control" id="usernamex">
                                   </div>
-                                  <input name="volume" hidden value="0" />
                                 </div>
                               
                                 <div class="modal-footer">

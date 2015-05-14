@@ -24,21 +24,66 @@ use Session;
 			$TPS = TPS::all();
 			$Sarana = Sarana::all();
 			$Petugas = Petugas::all();
-			return view('overviewAdmin')->with('TPA', $TPA)->with('TPS', $TPS)->with('Sarana', $Sarana)->with('Petugas', $Petugas);
+			$jumlahPTotal = DB::table('petugas')
+							-> where ('pekerjaan', 'petugas')
+							-> count ();
+			$jumlahPAssigned = DB::table('petugas')
+							-> where ('isAssigned', 1)
+							-> count ();	
+			$jumlahPnonAssigned = $jumlahPTotal - $jumlahPAssigned;
+			$jumlahSTotal = DB::table('sarana')
+							-> count ();
+			$jumlahSAssigned = DB::table('sarana')
+							-> where ('isAssigned', 1)
+							-> count ();
+			$jumlahSnonAssigned = $jumlahSTotal - $jumlahSAssigned;											
+			return view('overviewAdmin')->with('TPA', $TPA)->with('TPS', $TPS)->with('Sarana', $Sarana)->with('Petugas', $Petugas)
+										->with('jumlahPAssigned', $jumlahPAssigned)->with('jumlahPnonAssigned', $jumlahPnonAssigned)
+										->with('jumlahSAssigned', $jumlahSAssigned)->with('jumlahSnonAssigned', $jumlahSnonAssigned);
 		}
 		public function homeDinas(){
 			$TPA = TPA::all();
 			$TPS = TPS::all();
 			$Sarana = Sarana::all();
 			$Petugas = Petugas::all();
-			return view('overviewDinas')->with('TPA', $TPA)->with('TPS', $TPS)->with('Sarana', $Sarana)->with('Petugas', $Petugas);
+			$jumlahPTotal = DB::table('petugas')
+							-> where ('pekerjaan', 'petugas')
+							-> count ();
+			$jumlahPAssigned = DB::table('petugas')
+							-> where ('isAssigned', 1)
+							-> count ();	
+			$jumlahPnonAssigned = $jumlahPTotal - $jumlahPAssigned;
+			$jumlahSTotal = DB::table('sarana')
+							-> count ();
+			$jumlahSAssigned = DB::table('sarana')
+							-> where ('isAssigned', 1)
+							-> count ();
+			$jumlahSnonAssigned = $jumlahSTotal - $jumlahSAssigned;											
+			return view('overviewDinas')->with('TPA', $TPA)->with('TPS', $TPS)->with('Sarana', $Sarana)->with('Petugas', $Petugas)
+										->with('jumlahPAssigned', $jumlahPAssigned)->with('jumlahPnonAssigned', $jumlahPnonAssigned)
+										->with('jumlahSAssigned', $jumlahSAssigned)->with('jumlahSnonAssigned', $jumlahSnonAssigned);
 		}
 		public function homePetugas(){
 			$TPA = TPA::all();
 			$TPS = TPS::all();
 			$Sarana = Sarana::all();
 			$Petugas = Petugas::all();
-			return view('overviewPetugas')->with('TPA', $TPA)->with('TPS', $TPS)->with('Sarana', $Sarana)->with('Petugas', $Petugas);
+			$jumlahPTotal = DB::table('petugas')
+							-> where ('pekerjaan', 'petugas')
+							-> count ();
+			$jumlahPAssigned = DB::table('petugas')
+							-> where ('isAssigned', 1)
+							-> count ();	
+			$jumlahPnonAssigned = $jumlahPTotal - $jumlahPAssigned;
+			$jumlahSTotal = DB::table('sarana')
+							-> count ();
+			$jumlahSAssigned = DB::table('sarana')
+							-> where ('isAssigned', 1)
+							-> count ();
+			$jumlahSnonAssigned = $jumlahSTotal - $jumlahSAssigned;											
+			return view('overviewPetugas')->with('TPA', $TPA)->with('TPS', $TPS)->with('Sarana', $Sarana)->with('Petugas', $Petugas)
+										->with('jumlahPAssigned', $jumlahPAssigned)->with('jumlahPnonAssigned', $jumlahPnonAssigned)
+										->with('jumlahSAssigned', $jumlahSAssigned)->with('jumlahSnonAssigned', $jumlahSnonAssigned);
 		}
 		public function inventoryTPA()
 		{
@@ -152,6 +197,7 @@ use Session;
 			return view('formPenjadwalanSarana')->with('Date', $mytime)->with('Date2', $mytime2)->with('TPA', $tpa)->with('TPS', $tps)->with('sarana', $sarana);
 		}
 		public function postPenjadwalanSarana() {
+			$input = Request::all();
 			$jenis = Request::get("jenis");
 			$plat = Request::get("plat");
 			$jadwal = Request::get("jadwal");
