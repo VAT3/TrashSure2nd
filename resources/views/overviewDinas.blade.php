@@ -32,7 +32,7 @@
                       </a>
                       <ul class="sub">
                           <li><a  href="{{'schedule'}}">Petugas</a></li>
-                          <li><a  href="pengangkutan.html">Pengangkutan</a></li>
+                          <li><a  href="{{'isiSarana'}}">Pengangkutan</a></li>
                       </ul>
                   </li>
                   <li class="sub-menu">
