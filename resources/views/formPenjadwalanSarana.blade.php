@@ -75,7 +75,7 @@
                               </thead>
                               <tbody>
                               <tr>
-                                  <form role="form" method="post" action="" name="formSarana">
+                                  <form role="form" method="post" action="/isiSarana">
                                   <input name="_token" hidden value="{!! csrf_token() !!}" />
                                   <td>
                                       <select class="form-control placeholder" name="tanggal" type="text">

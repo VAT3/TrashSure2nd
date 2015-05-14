@@ -40,6 +40,7 @@ Route::post('/assignSchedule', 'MainController@postAssignSchedule');
 Route::get('/viewSchedule', 'MainController@viewSchedule');
 Route::get('/viewScheduleSelf', 'MainController@viewScheduleSelf');
 Route::get('/laporan', 'MainController@laporan');
+Route::get('/resetJadwal', 'MainController@resetJadwal');
 
 //ADD
 Route::get('/addTPA', 'AddController@getAddTPA');

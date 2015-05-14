@@ -85,6 +85,11 @@ use Session;
 			$jadwal = new Jadwal();
 			$jadwal->fill($input)->save();
 
+			$nama = Request::input('petugas');
+			DB::table('petugas')
+				-> where ('nama', $nama)
+				-> update (['isAssigned' => 1]);
+
 			$mytime = Carbon::now('Asia/Jakarta')->addDay()->toDateString();
 			$mytime2 = Carbon::now('Asia/Jakarta')->toDateString();
 			$Petugas = Petugas::all();
@@ -164,6 +169,18 @@ use Session;
 			$tps = DB::select('SELECT * from tps');
 			$sarana = DB::select('SELECT * from sarana');
 			return view('formPenjadwalanSarana')->with('tpa', $tpa)->with('tps', $tps)->with('sarana', $sarana);
+		}
+		public function resetJadwal(){
+			DB::table('petugas')
+				-> update (['isAssigned' => 0]);
+			DB::table('jadwal')->delete();
+			$Petugas = Petugas::all();
+			$TPA = TPA::all();
+			$TPS = TPS::all();
+			$Jadwal = Jadwal::all();
+
+			$mytime = Carbon::now('Asia/Jakarta')->toDateString();
+			return view('viewSchedule')->with('Jadwal', $Jadwal)->with('Date', $mytime)->with('Petugas', $Petugas)->with('TPA', $TPA)->with('TPS', $TPS);;
 		}
 	}
 ?>

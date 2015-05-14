@@ -90,10 +90,14 @@
                               @endforeach
                               </tbody>
                           </table>
+                          
                           <div>
                         </div>
                       </div><!-- /content-panel -->
                   </div><!-- /col-md-12 -->
+                  <div>
+                    <a href="{{url('resetJadwal')}}"><button class="btn btn-primary center"><i class="fa fa-pencil"></i> Reset Jadwal</button></a>
+                  </div>
               </div><!-- /row -->
       
     </section><! --/wrapper -->
