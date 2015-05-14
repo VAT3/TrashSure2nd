@@ -197,6 +197,12 @@ use Session;
 			return view('formPenjadwalanSarana')->with('Date', $mytime)->with('Date2', $mytime2)->with('TPA', $tpa)->with('TPS', $tps)->with('sarana', $sarana);
 		}
 		public function postPenjadwalanSarana() {
+			$durasi = Request::get("durasi");
+			$lokasi = Request::get("lokasi");
+			$jenis = Request::get("jenis_sarana");
+			$plat = Request::get("plat_sarana");
+			$tanggal = Request::get("tanggal");
+			
 			DB::table('jadwal_sarana')->insert(array(
 			    array('tanggal' => $tanggal, 'durasi' => $durasi, 'jenis' => $jenis, 'lokasi' => $lokasi, 'plat' => $plat)
 			));
