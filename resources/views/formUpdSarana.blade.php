@@ -49,7 +49,7 @@
             <h3><i class="fa fa-angle-right"></i><a href="{{url('admin')}}">Dashboard</a> / <a href="{{url('inventorySarana')}}">Inventaris Sarana</a> / Update Sarana</h3>
             <div class="row mt">
                   <div class="col-md-12">
-                      <form method="post">
+                      <form name="updateSarana" method="post">
                         <div class="modal-content">
                             <div class="modal-header"> 
                               <h4 class="modal-title" id="editModalLabel">Ubah Sarana</h4>
@@ -57,17 +57,17 @@
                             <div class="modal-body">
                                 <input name="_token" hidden value="{!! csrf_token() !!}" />
                                 <div class="form-group">
-                                    <label for="recipient-name" class="control-label">Nama:</label>
-                                    <input type="text" class="form-control" id="recipient-name" name="nama" placeholder="<?php echo Session::get('jenisSarana')?>">
+                                    <label for="recipient-name" class="control-label">Jenis:</label>
+                                    <input type="text" class="form-control" id="recipient-name" name="jenis" value="<?php echo Session::get('jenisSarana')?>">
                                 </div>
                                 <div class="form-group">
-                                    <label for="recipient-name" class="control-label">Lokasi:</label>
-                                    <input type="text" class="form-control" id="recipient-name" name="lokasi" placeholder="<?php echo Session::get('platSarana')?>">
+                                    <label for="recipient-name" class="control-label">Plat:</label>
+                                    <input type="text" class="form-control" id="recipient-name" name="plat" value="<?php echo Session::get('platSarana')?>">
                                 </div>
                             </div>
                           <div class="modal-footer">
                             <button type="reset" class="btn btn-default" data-dismiss="modal" style="margin-left:0px;">Reset</button>
-                            <button type="submit" class="btn btn-default">Simpan</button>
+                            <button type="submit" onclick="return validateForm()" class="btn btn-default">Simpan</button>
                           </div>
                         </div>
                         </form>
@@ -76,4 +76,61 @@
       
     </section><!--/wrapper -->
       </section><!-- /MAIN CONTENT -->
+
+      <script type="text/javascript">
+      function validateForm() {
+        var form = [document.forms["updateSarana"]["jenis"].value, document.forms["updateSarana"]["plat"].value];
+        var text = "";
+        var count = 0;
+        var it = 0;
+        for (var i = 0; i < 2; i++) { //increment count
+          if (form[i] == null || form[i] == "") {
+            count++;
+          }
+        }
+        it = count;
+        if (count == 1) { //kasus 1 count
+          for (var i = 0; i < 2; i++) { //count dependent
+            switch(i) {
+              case 0:
+                text = "Jenis";
+                break;
+              case 1:
+                text = "Plat";
+                break;
+            }   
+          } 
+        }
+        else { //kasus lebih dari 1
+          for (var i = 0; i < 2; i++) {
+            if (form[i] == "" || form[i] == null) {
+              switch(i) {
+                case 0:
+                  text += "Jenis";
+                  break;
+                case 1: 
+                  if (it == 1) { //sisa 1
+                    if (count == 1) {
+                      text += "Plat";
+                    }
+                    else {
+                      text += " dan plat";
+                    }
+                  }
+                  else { //masih lebih dari 1
+                    if (text == "") text += "Plat";
+                    else text += ", plat";
+                  }
+                  break;
+              }
+              it--;
+            }  
+          }
+        }
+        if (count > 0) {
+          alert(text + " tidak boleh kosong!");
+          return false;
+        }
+      }
+      </script>
 @endsection

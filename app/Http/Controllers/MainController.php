@@ -197,24 +197,16 @@ use Session;
 			return view('formPenjadwalanSarana')->with('Date', $mytime)->with('Date2', $mytime2)->with('TPA', $tpa)->with('TPS', $tps)->with('sarana', $sarana);
 		}
 		public function postPenjadwalanSarana() {
-			$input = Request::all();
-			$jenis = Request::get("jenis");
-			$plat = Request::get("plat");
-			$jadwal = Request::get("jadwal");
-			$tempat = 'tps';
-			/* Cek TPA atau TPS beserta voluemnya */
-			if (sizeof($hasil = (DB::select('SELECT volume from tpa WHERE nama = ?', [$input]))) != 0) {
-				$tempat = 'tpa';
-			}
-			
-			DB::table('jadwal_pengangkutan')->insert(array(
-			    array('jenis' => $jenis, 'plat' => $plat, 'jadwal' => $jadwal, 'tempat' => $tempat)
+			DB::table('jadwal_sarana')->insert(array(
+			    array('tanggal' => $tanggal, 'durasi' => $durasi, 'jenis' => $jenis, 'lokasi' => $lokasi, 'plat' => $plat)
 			));
 			//return
 			$tpa = DB::select('SELECT * from tpa');
 			$tps = DB::select('SELECT * from tps');
 			$sarana = DB::select('SELECT * from sarana');
-			return view('formPenjadwalanSarana')->with('tpa', $tpa)->with('tps', $tps)->with('sarana', $sarana);
+			$mytime = Carbon::now('Asia/Jakarta')->addDay()->toDateString();
+			$mytime2 = Carbon::now('Asia/Jakarta')->toDateString();
+			return view('formPenjadwalanSarana')->with('Date', $mytime)->with('Date2', $mytime2)->with('TPA', $tpa)->with('TPS', $tps)->with('sarana', $sarana);
 		}
 		public function resetJadwal(){
 			DB::table('petugas')

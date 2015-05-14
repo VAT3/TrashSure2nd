@@ -74,18 +74,18 @@
                               </thead>
                               <tbody>
                               <tr>
-                                  <form role="form" method="post" action="/assignSchedule">
+                                  <form name="formPetugas" role="form" method="post" action="/assignSchedule">
                                   <input name="_token" hidden value="{!! csrf_token() !!}" />
                                   <td>
                                       <select class="form-control placeholder" name="tanggal" type="text">
-                                      <option>Tanggal</option>
+                                      <option value="" selected disabled>Tanggal</option>
                                         <option>{{$Date}}</option>
                                         <option>{{$Date2}}</option>
                                       </select>
                                   </td>
                                   <td>
                                     <select class="form-control placeholder" name="durasi" type="text">
-                                        <option>Durasi</option>
+                                        <option value="" selected disabled>Durasi</option>
                                         <option>05:00-06.00</option>
                                         <option>06:00-07.00</option>
                                         <option>07:00-08.00</option>
@@ -103,7 +103,7 @@
                                   </td>
                                   <td>
                                     <select class="form-control placeholder" name="petugas" type="text">
-                                        <option>Petugas</option>
+                                        <option value="" selected disabled>Petugas</option>
                                         @foreach($Petugas as $petugas)
                                         @if($petugas->pekerjaan == 'Petugas')
                                         <option>{{$petugas->nama}}</option>
@@ -113,7 +113,7 @@
                                   </td>
                                   <td>
                                     <select class="form-control placeholder" name="lokasi" type="text">
-                                        <option>Lokasi</option>
+                                        <option value="" selected disabled>Lokasi</option>
                                         <optgroup label="---TPA---"></optgroup>
                                         @foreach($TPA as $tpa)
                                         <option>{{$tpa->nama}} - {{$tpa->lokasi}}</option>
@@ -137,6 +137,97 @@
                   </div><!-- /col-md-12 -->
               </div><!-- /row -->
       
-    </section><! --/wrapper -->
+    </section><!--/wrapper -->
       </section><!-- /MAIN CONTENT -->
+
+      <script type="text/javascript">
+      function validateForm() {
+        var form = [document.forms["formPetugas"]["tanggal"].value, document.forms["formPetugas"]["durasi"].value, document.forms["formPetugas"]["petugas"].value, document.forms["formPetugas"]["lokasi"].value];
+        var text = "";
+        var count = 0;
+        var it = 0;
+        for (var i = 0; i < 4; i++) { //increment count
+          if (form[i] == null || form[i] == "") {
+            count++;
+          }
+        }
+        it = count;
+        if (count == 1) { //kasus 1 count
+          for (var i = 0; i < 4; i++) { //count dependent
+            switch(i) {
+              case 0:
+                text = "Tanggal";
+                break;
+              case 1:
+                text = "Durasi";
+                break;
+              case 2:
+                text = "Petugas";
+                break;
+              case 3:
+                text = "Lokasi";
+                break;
+            }   
+          } 
+        }
+        else { //kasus lebih dari 1
+          for (var i = 0; i < 4; i++) {
+            if (form[i] == "" || form[i] == null) {
+              switch(i) {
+                case 0: 
+                  text += "Tanggal";
+                  break;
+                case 1:
+                  if (it == 1) { //sisa 1
+                    if (count == 1) {
+                      text += "Durasi";
+                    }
+                    else {
+                      text += " dan durasi";
+                    }
+                  }
+                  else { //masih lebih dari 1
+                    if (text == "") text += "Durasi";
+                    else text += ", durasi";
+                  }
+                  break;
+                case 2:
+                  if (it == 1) { //sisa 1
+                    if (count == 1) {
+                      text += "Petugas";
+                    }
+                    else {
+                      text += " dan petugas";
+                    }
+                  }
+                  else { //masih lebih dari 1
+                    if (text == "") text += "Petugas";
+                    else text += ", petugas";
+                  }
+                  break;
+                case 3:
+                  if (it == 1) { //sisa 1
+                    if (count == 1) {
+                      text += "Lokasi";
+                    }
+                    else if (count == 2) {
+                      text += " dan lokasi";
+                    }
+                    else {
+                      if (text == "") text += "lokasi";
+                      else text += ", dan lokasi";
+                    }
+                  }
+                  break;
+              }
+              it--;
+            }  
+          }
+        }
+        if (count > 0) {
+          alert(text + " tidak boleh kosong!");
+          return false;
+        }
+      }
+      </script>
 @endsection

@@ -1,6 +1,7 @@
 <?php 
 namespace App\Http\Controllers;
 use Request;
+use DB;
 use App\TPA;
 use App\TPS;
 use App\Sarana;
@@ -56,10 +57,15 @@ use App\Petugas;
 		}
 		public function postAddPetugas()
 		{
-			$input = Request::all();
-			// return response($input);
-			$petugas = new Petugas();
-			$petugas->fill($input)->save();
+			$nama = Request::get("nama");
+			$nip = Request::get("nip");
+			$pekerjaan = Request::get("pekerjaan");
+			$username = Request::get("username");
+			$password = Request::get("password");
+
+			DB::table('petugas')->insert(array(
+			    array('nama' => $nama, 'nip' => $nip, 'pekerjaan' => $pekerjaan, 'username' => $username, 'password' => $password)
+			));
 			return redirect('inventoryPetugas');
 		}
 	}
