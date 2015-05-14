@@ -75,14 +75,18 @@
                               </thead>
                               <tbody>
                               <tr>
-                                  <form role="form" method="post" action="/assignSchedule">
+                                  <form role="form" method="post" action="" name="formSarana">
                                   <input name="_token" hidden value="{!! csrf_token() !!}" />
                                   <td>
-                                      <input type="text" class="form-control" name="tanggal" value="{{$Date}}" readonly>
+                                      <select class="form-control placeholder" name="tanggal" type="text">
+                                      <option>Tanggal</option>
+                                        <option>{{$Date}}</option>
+                                        <option>{{$Date2}}</option>
+                                      </select>
                                   </td>
                                   <td>
                                     <select class="form-control placeholder" name="durasi" type="text">
-                                        <option>Durasi</option>
+                                        <option value="" selected disabled>Durasi</option>
                                         <option>05:00-06.00</option>
                                         <option>06:00-07.00</option>
                                         <option>07:00-08.00</option>
@@ -100,7 +104,7 @@
                                   </td>
                                   <td>
                                     <select class="form-control placeholder" name="lokasi" type="text">
-                                        <option>Lokasi</option>
+                                        <option value="" selected disabled>Lokasi</option>
                                         <optgroup label="---TPA---"></optgroup>
                                         @foreach($TPA as $tpa)
                                         <option>{{$tpa->nama}} - {{$tpa->lokasi}}</option>
@@ -114,7 +118,7 @@
                                   <td>
                                     <select class="form-control placeholder" name="jenis_sarana" type="text">
                                         <label>Jenis Sarana</label>
-                                            <option selected>Jenis</option>
+                                            <option value="" selected disabled>Jenis</option>
                                             @foreach ($sarana as $saranaElement)
                                             <option>{{$saranaElement->jenis}}</option>
                                             @endforeach                                            
@@ -123,14 +127,14 @@
                                   <td>
                                     <select class="form-control placeholder" name="plat_sarana" type="text">
                                         <label>Plat Sarana</label>
-                                            <option selected>Plat</option>
+                                            <option value="" selected disabled>Plat</option>
                                             @foreach ($sarana as $saranaElement)
                                             <option>{{$saranaElement->plat}}</option>
                                             @endforeach
                                     </select>
                                   </td>
                                   <td>
-                                    <input type="submit" value="Submit" class="btn btn-primary">
+                                    <input type="submit" value="Submit" onclick="return validateForm()" class="btn btn-primary">
                                   </td>
                                   </form>
                               </tr>
@@ -142,6 +146,97 @@
                   </div><!-- /col-md-12 -->
               </div><!-- /row -->
       
-    </section><! --/wrapper -->
+    </section><!--/wrapper -->
       </section><!-- /MAIN CONTENT -->
+
+      <script type="text/javascript">
+      function validateForm() {
+        var form = [document.forms["formSarana"]["durasi"].value, document.forms["formSarana"]["lokasi"].value, document.forms["formSarana"]["plat_sarana"].value, document.forms["formSarana"]["jenis_sarana"].value];
+        var text = "";
+        var count = 0;
+        var it = 0;
+        for (var i = 0; i < 4; i++) { //increment count
+          if (form[i] == null || form[i] == "") {
+            count++;
+          }
+        }
+        it = count;
+        if (count == 1) { //kasus 1 count
+          for (var i = 0; i < 4; i++) { //count dependent
+            switch(i) {
+              case 0:
+                text = "Durasi";
+                break;
+              case 1:
+                text = "Lokasi";
+                break;
+              case 2:
+                text = "Plat";
+                break;
+              case 3:
+                text = "Jenis";
+                break;
+            }   
+          } 
+        }
+        else { //kasus lebih dari 1
+          for (var i = 0; i < 4; i++) {
+            if (form[i] == "" || form[i] == null) {
+              switch(i) {
+                case 0: 
+                  text += "Durasi";
+                  break;
+                case 1:
+                  if (it == 1) { //sisa 1
+                    if (count == 1) {
+                      text += "Lokasi";
+                    }
+                    else {
+                      text += " dan lokasi";
+                    }
+                  }
+                  else { //masih lebih dari 1
+                    if (text == "") text += "Lokasi";
+                    else text += ", lokasi";
+                  }
+                  break;
+                case 2:
+                  if (it == 1) { //sisa 1
+                    if (count == 1) {
+                      text += "Plat";
+                    }
+                    else {
+                      text += " dan plat";
+                    }
+                  }
+                  else { //masih lebih dari 1
+                    if (text == "") text += "Plat";
+                    else text += ", plat";
+                  }
+                  break;
+                case 3:
+                  if (it == 1) { //sisa 1
+                    if (count == 1) {
+                      text += "Jenis";
+                    }
+                    else if (count == 2) {
+                      text += " dan jenis";
+                    }
+                    else {
+                      if (text == "") text += "Jenis";
+                      else text += ", dan jenis";
+                    }
+                  }
+                  break;
+              }
+              it--;
+            }  
+          }
+        }
+        if (count > 0) {
+          alert(text + " tidak boleh kosong!");
+          return false;
+        }
+      }
+      </script>
 @endsection

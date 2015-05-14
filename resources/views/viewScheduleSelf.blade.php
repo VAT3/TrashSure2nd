@@ -15,31 +15,21 @@
                   <h5 class="centered"><?php echo Session::get('name')?></h5>
                     
                   <li class="mt">
-                      <a  href="{{url('dinas')}}">
+                      <a href="{{url('petugas')}}">
                           <i class="fa fa-dashboard"></i>
                           <span>Dashboard</span>
                       </a>
                   </li>
                   <li class="sub-menu">
-                      <a href="{{url('laporan')}}" >
-                          <i class="fa fa-file"></i>
-                          <span>Laporan</span>
-                      </a>
-                  </li>
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class="fa fa-list-alt"></i>
-                          <span>Penjadwalan</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="{{url('schedule')}}">Petugas</a></li>
-                          <li><a  href="{{url('isiSarana')}}">Pengangkutan</a></li>
-                      </ul>
-                  </li>
-                  <li class="sub-menu">
-                      <a class="active" href="{{url('viewSchedule')}}" >
+                      <a class="active" href="{{url('viewScheduleSelf')}}" >
                           <i class="fa fa-calendar"></i>
                           <span>Jadwal</span>
+                      </a>
+                  </li>
+                  <li class="sub-menu">
+                      <a  href="{{url('isiVolume')}}" >
+                          <i class="fa fa-download"></i>
+                          <span>Volume</span>
                       </a>
                   </li>
               </ul>

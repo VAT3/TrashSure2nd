@@ -20,7 +20,7 @@
                       </a>
                   </li>
                   <li class="sub-menu">
-                      <a  href="{{url('viewSchedule')}}" >
+                      <a  href="{{url('viewScheduleSelf')}}" >
                           <i class="fa fa-calendar"></i>
                           <span>Jadwal</span>
                       </a>
