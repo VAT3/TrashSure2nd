@@ -5,6 +5,7 @@ use App\TPS;
 use App\Sarana;
 use App\Petugas;
 use App\Jadwal;
+use App\Jadwal_Lokasi;
 use App\Quotation;
 use Carbon\Carbon;
 use DB;
@@ -160,8 +161,11 @@ use Session;
 			if (sizeof($hasil = (DB::select('SELECT volume from tpa WHERE nama = ?', [$input]))) != 0) {
 				$tempat = 'tpa';
 			}
-			
-			DB::table('jadwal_pengangkutan')->insert(array(
+			else {
+				$hasil = (DB::select('SELECT volume from tps WHERE nama = ?', [$input]));
+			}
+
+			DB::table('jadwal_sarana')->insert(array(
 			    array('jenis' => $jenis, 'plat' => $plat, 'jadwal' => $jadwal, 'tempat' => $tempat)
 			));
 			//return

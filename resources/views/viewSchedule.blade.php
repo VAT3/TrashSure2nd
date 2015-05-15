@@ -90,14 +90,47 @@
                               @endforeach
                               </tbody>
                           </table>
-                          
                           <div>
-                        </div>
+                           <a href="{{url('resetJadwal')}}"><button class="btn btn-primary center"><i class="fa fa-pencil"></i> Reset Jadwal Petugas</button></a>
+                         </div>
+
+                         <table class="table table-striped table-advance table-hover">
+                            <h4><i class="fa fa-angle-right"></i> Jadwal Sarana</h4>
+                            <hr>
+                              <thead>
+                              <tr>
+                                  <th><i class="fa fa-calendar"></i> Tanggal</th>
+                                  <th><i class="fa fa-bell"></i> Durasi</th>
+                                  <th><i class="fa fa-map-marker"></i> Lokasi</th>
+                                  <th><i class="fa fa-user"></i> Jenis</th>
+                                  <th><i class="fa fa-user"></i> Plat</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              @foreach ($Jadwal as $jadwal)
+                                <tr>
+                                    @if ($jadwal->tanggal == $Date)
+                                    <td>{{$jadwal->tanggal}}</td>
+                                    <td>
+                                        {{$jadwal->durasi}}
+                                    </td>
+                                    <td>
+                                        {{$jadwal->petugas}}
+                                    </td>
+                                    <td>
+                                        {{$jadwal->lokasi}}
+                                    </td>
+                                    @endif
+                                </tr>
+                              @endforeach
+                              </tbody>
+                          </table>
+                          <div>
+                           <a href="{{url('resetJadwal')}}"><button class="btn btn-primary center"><i class="fa fa-pencil"></i> Reset Jadwal Petugas</button></a>
+                         </div>
                       </div><!-- /content-panel -->
                   </div><!-- /col-md-12 -->
-                  <div>
-                    <a href="{{url('resetJadwal')}}"><button class="btn btn-primary center"><i class="fa fa-pencil"></i> Reset Jadwal</button></a>
-                  </div>
+                  
               </div><!-- /row -->
       
     </section><! --/wrapper -->
