@@ -65,7 +65,7 @@
                                 </div>
                                 <div class="row">
                                   <div class="col-sm-6 col-xs-6">
-                                    <p><i class="fa fa-database"></i>{{count($TPA)}}</p>
+                                    <p><i class="fa fa-database"></i>{{count($TPA)}} TPA tersedia</p>
                                   </div>
                                 </div>
                             </div><!--/grey-panel -->
@@ -79,7 +79,7 @@
                                 </div>
                                 <div class="row">
                                   <div class="col-sm-6 col-xs-6">
-                                    <p><i class="fa fa-database"></i> {{count($TPS)}} </p>
+                                    <p><i class="fa fa-database"></i> {{count($TPS)}} TPS tersedia</p>
                                   </div>
                                 </div>
                             </div>
@@ -93,8 +93,21 @@
                                 </div>
                                 <div class="row">
                                   <div class="col-sm-6 col-xs-6">
-                                    <p><i class="fa fa-database"></i>{{$jumlahPAssigned + $jumlahPnonAssigned}}</p>
+                                    <p><i class="fa fa-database"></i>{{$jumlahPAssigned + $jumlahPnonAssigned}} Petugas tersedia</p>
                                   </div>
+                                </div>
+                                <div class="col-sm-6 col-xs-6">
+                                  
+                                </div>
+                                <br>
+                                <font size = "6">{{round((float)($jumlahPAssigned / ($jumlahPAssigned+$jumlahPnonAssigned))*100) . '%'}}</font>
+                                
+                                <div class="col-sm-6 col-xs-6">
+                                  <br>
+                                  <br>
+                                  <br>
+                                  <br>
+                                  <font size = "4"><p>Yang telah dijadwalkan</p></font>
                                 </div>
                                 <canvas id="serverstatus01" height="120" width="120"></canvas>
                                 <script>
@@ -121,9 +134,22 @@
                                 </div>
                                 <div class="row">
                                   <div class="col-sm-6 col-xs-6">
-                                    <p><i class="fa fa-database"></i>{{count($Sarana)}}</p>
+                                    <p><i class="fa fa-database"></i>{{count($Sarana)}} Sarana tersedia</p>
                                   </div>
                                 </div>
+                                <div class="col-sm-6 col-xs-6">
+                                  
+                                </div>                                
+                                <br>
+                                <font size = "6">{{round((float)($jumlahSAssigned / count($Sarana))*100) . '%'}}</font>
+                                
+                                <div class="col-sm-6 col-xs-6">
+                                  <br>
+                                  <br>
+                                  <br>
+                                  <br>
+                                  <font size = "4"><p>Yang telah dijadwalkan</p></font>
+                                </div>                                
                                 <canvas id="serverstatus02" height="120" width="120"></canvas>
                                 <script>
                                     var doughnutData = [
@@ -137,7 +163,7 @@
                                             }
                                         ];
                                     var myDoughnut = new Chart(document.getElementById("serverstatus02").getContext("2d")).Doughnut(doughnutData);
-                                </script> 
+                                </script>
                             </div>
                         </div><!-- /col-md-6 -->
                     </div><!-- /row -->
