@@ -68,18 +68,18 @@
                                   <th><i class="fa fa-calendar"></i> Tanggal</th>
                                   <th><i class="fa fa-bell"></i> Durasi</th>
                                   <th><i class="fa fa-map-marker"></i> Lokasi</th>
-                                  <th><i class="fa fa-user"></i> Jenis</th>
-                                  <th><i class="fa fa-user"></i> Plat</th>
+                                  <th><i class="fa fa-road"></i> Jenis</th>
+                                  <th><i class="fa fa-star"></i> Plat</th>
                                   <th></th>
                               </tr>
                               </thead>
                               <tbody>
                               <tr>
-                                  <form role="form" method="post" action="/isiSarana">
+                                  <form name="formSarana" role="form" method="post" action="/isiSarana">
                                   <input name="_token" hidden value="{!! csrf_token() !!}" />
                                   <td>
                                       <select class="form-control placeholder" name="tanggal" type="text">
-                                      <option>Tanggal</option>
+                                      <option value="" selected disabled>Tanggal</option>
                                         <option>{{$Date}}</option>
                                         <option>{{$Date2}}</option>
                                       </select>
@@ -119,9 +119,7 @@
                                     <select class="form-control placeholder" name="jenis_sarana" type="text">
                                         <label>Jenis Sarana</label>
                                             <option value="" selected disabled>Jenis</option>
-                                            @foreach ($sarana as $saranaElement)
-                                            <option>{{$saranaElement->jenis}}</option>
-                                            @endforeach                                            
+                                            <option>Mobil Sampah</option>                                           
                                     </select>
                                   </td>
                                   <td>
@@ -151,42 +149,59 @@
 
       <script type="text/javascript">
       function validateForm() {
-        var form = [document.forms["formSarana"]["durasi"].value, document.forms["formSarana"]["lokasi"].value, document.forms["formSarana"]["plat_sarana"].value, document.forms["formSarana"]["jenis_sarana"].value];
+        var form = [document.forms["formSarana"]["tanggal"].value, document.forms["formSarana"]["durasi"].value, document.forms["formSarana"]["lokasi"].value, document.forms["formSarana"]["plat_sarana"].value, document.forms["formSarana"]["jenis_sarana"].value];
         var text = "";
         var count = 0;
         var it = 0;
-        for (var i = 0; i < 4; i++) { //increment count
+        for (var i = 0; i < 5; i++) { //increment count
           if (form[i] == null || form[i] == "") {
             count++;
           }
         }
         it = count;
         if (count == 1) { //kasus 1 count
-          for (var i = 0; i < 4; i++) { //count dependent
+          for (var i = 0; i < 5; i++) { //count dependent
             switch(i) {
               case 0:
-                text = "Durasi";
+                text = "Tanggal";
                 break;
               case 1:
-                text = "Lokasi";
+                text = "Durasi";
                 break;
               case 2:
-                text = "Plat";
+                text = "Lokasi";
                 break;
               case 3:
+                text = "Plat";
+                break;
+              case 4:
                 text = "Jenis";
                 break;
             }   
           } 
         }
         else { //kasus lebih dari 1
-          for (var i = 0; i < 4; i++) {
+          for (var i = 0; i < 5; i++) {
             if (form[i] == "" || form[i] == null) {
               switch(i) {
-                case 0: 
-                  text += "Durasi";
+                case 0:
+                  text += "Tanggal";
                   break;
-                case 1:
+                case 1: 
+                  if (it == 1) { //sisa 1
+                    if (count == 1) {
+                      text += "Durasi";
+                    }
+                    else {
+                      text += " dan durasi";
+                    }
+                  }
+                  else { //masih lebih dari 1
+                    if (text == "") text += "Durasi";
+                    else text += ", durasi";
+                  }
+                  break;
+                case 2:
                   if (it == 1) { //sisa 1
                     if (count == 1) {
                       text += "Lokasi";
@@ -200,7 +215,7 @@
                     else text += ", lokasi";
                   }
                   break;
-                case 2:
+                case 3:
                   if (it == 1) { //sisa 1
                     if (count == 1) {
                       text += "Plat";
@@ -214,7 +229,7 @@
                     else text += ", plat";
                   }
                   break;
-                case 3:
+                case 4:
                   if (it == 1) { //sisa 1
                     if (count == 1) {
                       text += "Jenis";

@@ -86,7 +86,7 @@
                           <!-- Modal Tambah -->
                           <div class="modal fade" id="tambahModal" tabindex="-1" role="dialog" aria-labelledby="tambahModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
-                            <form method="post" action="/addTPA">
+                            <form name="addTPA" method="post" action="/addTPA">
                               <div class="modal-content">
                                 <div class="modal-header">
                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -108,7 +108,7 @@
                               
                                 <div class="modal-footer">
                                   <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left:0px;">Tutup</button>
-                                  <input type="submit" class="btn btn-default" value="Simpan">
+                                  <input type="submit" onclick="return validateForm()" class="btn btn-default" value="Simpan">
                                 </div>
                               </div>
                             </form>
@@ -122,6 +122,63 @@
                   </div><!-- /col-md-12 -->
               </div><!-- /row -->
       
-    </section><! --/wrapper -->
+    </section><!--/wrapper -->
       </section><!-- /MAIN CONTENT -->
+
+      <script type="text/javascript">
+      function validateForm() {
+        var form = [document.forms["addTPA"]["nama"].value, document.forms["addTPA"]["lokasi"].value];
+        var text = "";
+        var count = 0;
+        var it = 0;
+        for (var i = 0; i < 2; i++) { //increment count
+          if (form[i] == null || form[i] == "") {
+            count++;
+          }
+        }
+        it = count;
+        if (count == 1) { //kasus 1 count
+          for (var i = 0; i < 2; i++) { //count dependent
+            switch(i) {
+              case 0:
+                text = "Nama";
+                break;
+              case 1:
+                text = "Lokasi";
+                break;
+            }   
+          } 
+        }
+        else { //kasus lebih dari 1
+          for (var i = 0; i < 2; i++) {
+            if (form[i] == "" || form[i] == null) {
+              switch(i) {
+                case 0:
+                  text += "Nama";
+                  break;
+                case 1: 
+                  if (it == 1) { //sisa 1
+                    if (count == 1) {
+                      text += "Lokasi";
+                    }
+                    else {
+                      text += " dan lokasi";
+                    }
+                  }
+                  else { //masih lebih dari 1
+                    if (text == "") text += "Lokasi";
+                    else text += ", lokasi";
+                  }
+                  break;
+              }
+              it--;
+            }  
+          }
+        }
+        if (count > 0) {
+          alert(text + " tidak boleh kosong!");
+          return false;
+        }
+      }
+      </script>
 @endsection

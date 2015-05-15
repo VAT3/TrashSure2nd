@@ -5,7 +5,7 @@ use App\TPS;
 use App\Sarana;
 use App\Petugas;
 use App\Jadwal;
-use App\Jadwal_Lokasi;
+use App\Jadwal_Sarana;
 use App\Quotation;
 use Carbon\Carbon;
 use DB;
@@ -25,21 +25,66 @@ use Session;
 			$TPS = TPS::all();
 			$Sarana = Sarana::all();
 			$Petugas = Petugas::all();
-			return view('overviewAdmin')->with('TPA', $TPA)->with('TPS', $TPS)->with('Sarana', $Sarana)->with('Petugas', $Petugas);
+			$jumlahPTotal = DB::table('petugas')
+							-> where ('pekerjaan', 'petugas')
+							-> count ();
+			$jumlahPAssigned = DB::table('petugas')
+							-> where ('isAssigned', 1)
+							-> count ();	
+			$jumlahPnonAssigned = $jumlahPTotal - $jumlahPAssigned;
+			$jumlahSTotal = DB::table('sarana')
+							-> count ();
+			$jumlahSAssigned = DB::table('sarana')
+							-> where ('isAssigned', 1)
+							-> count ();
+			$jumlahSnonAssigned = $jumlahSTotal - $jumlahSAssigned;											
+			return view('overviewAdmin')->with('TPA', $TPA)->with('TPS', $TPS)->with('Sarana', $Sarana)->with('Petugas', $Petugas)
+										->with('jumlahPAssigned', $jumlahPAssigned)->with('jumlahPnonAssigned', $jumlahPnonAssigned)
+										->with('jumlahSAssigned', $jumlahSAssigned)->with('jumlahSnonAssigned', $jumlahSnonAssigned);
 		}
 		public function homeDinas(){
 			$TPA = TPA::all();
 			$TPS = TPS::all();
 			$Sarana = Sarana::all();
 			$Petugas = Petugas::all();
-			return view('overviewDinas')->with('TPA', $TPA)->with('TPS', $TPS)->with('Sarana', $Sarana)->with('Petugas', $Petugas);
+			$jumlahPTotal = DB::table('petugas')
+							-> where ('pekerjaan', 'petugas')
+							-> count ();
+			$jumlahPAssigned = DB::table('petugas')
+							-> where ('isAssigned', 1)
+							-> count ();	
+			$jumlahPnonAssigned = $jumlahPTotal - $jumlahPAssigned;
+			$jumlahSTotal = DB::table('sarana')
+							-> count ();
+			$jumlahSAssigned = DB::table('sarana')
+							-> where ('isAssigned', 1)
+							-> count ();
+			$jumlahSnonAssigned = $jumlahSTotal - $jumlahSAssigned;											
+			return view('overviewDinas')->with('TPA', $TPA)->with('TPS', $TPS)->with('Sarana', $Sarana)->with('Petugas', $Petugas)
+										->with('jumlahPAssigned', $jumlahPAssigned)->with('jumlahPnonAssigned', $jumlahPnonAssigned)
+										->with('jumlahSAssigned', $jumlahSAssigned)->with('jumlahSnonAssigned', $jumlahSnonAssigned);
 		}
 		public function homePetugas(){
 			$TPA = TPA::all();
 			$TPS = TPS::all();
 			$Sarana = Sarana::all();
 			$Petugas = Petugas::all();
-			return view('overviewPetugas')->with('TPA', $TPA)->with('TPS', $TPS)->with('Sarana', $Sarana)->with('Petugas', $Petugas);
+			$jumlahPTotal = DB::table('petugas')
+							-> where ('pekerjaan', 'petugas')
+							-> count ();
+			$jumlahPAssigned = DB::table('petugas')
+							-> where ('isAssigned', 1)
+							-> count ();	
+			$jumlahPnonAssigned = $jumlahPTotal - $jumlahPAssigned;
+			$jumlahSTotal = DB::table('sarana')
+							-> count ();
+			$jumlahSAssigned = DB::table('sarana')
+							-> where ('isAssigned', 1)
+							-> count ();
+			$jumlahSnonAssigned = $jumlahSTotal - $jumlahSAssigned;											
+			return view('overviewPetugas')->with('TPA', $TPA)->with('TPS', $TPS)->with('Sarana', $Sarana)->with('Petugas', $Petugas)
+										->with('jumlahPAssigned', $jumlahPAssigned)->with('jumlahPnonAssigned', $jumlahPnonAssigned)
+										->with('jumlahSAssigned', $jumlahSAssigned)->with('jumlahSnonAssigned', $jumlahSnonAssigned);
 		}
 		public function inventoryTPA()
 		{
@@ -104,8 +149,9 @@ use Session;
 			$TPA = TPA::all();
 			$TPS = TPS::all();
 			$Jadwal = Jadwal::all();
+			$Jadwal_Sarana = Jadwal_Sarana::all();
 			$mytime = Carbon::now('Asia/Jakarta')->toDateString();
-			return view('viewSchedule')->with('Jadwal', $Jadwal)->with('Date', $mytime)->with('Petugas', $Petugas)->with('TPA', $TPA)->with('TPS', $TPS);
+			return view('viewSchedule')->with('Jadwal', $Jadwal)->with('Jadwal_Sarana', $Jadwal_Sarana)->with('Date', $mytime)->with('Petugas', $Petugas)->with('TPA', $TPA)->with('TPS', $TPS);
 		}
 		public function viewScheduleSelf(){
 			$Petugas = Petugas::all();
@@ -153,26 +199,27 @@ use Session;
 			return view('formPenjadwalanSarana')->with('Date', $mytime)->with('Date2', $mytime2)->with('TPA', $tpa)->with('TPS', $tps)->with('sarana', $sarana);
 		}
 		public function postPenjadwalanSarana() {
-			$jenis = Request::get("jenis");
-			$plat = Request::get("plat");
-			$jadwal = Request::get("jadwal");
-			$tempat = 'tps';
-			/* Cek TPA atau TPS beserta voluemnya */
-			if (sizeof($hasil = (DB::select('SELECT volume from tpa WHERE nama = ?', [$input]))) != 0) {
-				$tempat = 'tpa';
-			}
-			else {
-				$hasil = (DB::select('SELECT volume from tps WHERE nama = ?', [$input]));
-			}
-
+			$durasi = Request::get("durasi");
+			$lokasi = Request::get("lokasi");
+			$jenis = Request::get("jenis_sarana");
+			$plat = Request::get("plat_sarana");
+			$tanggal = Request::get("tanggal");
+			
 			DB::table('jadwal_sarana')->insert(array(
-			    array('jenis' => $jenis, 'plat' => $plat, 'jadwal' => $jadwal, 'tempat' => $tempat)
+			    array('tanggal' => $tanggal, 'durasi' => $durasi, 'jenis' => $jenis, 'lokasi' => $lokasi, 'plat' => $plat)
 			));
-			//return
+			
+			$plat = Request::input('plat_sarana');
+			DB::table('sarana')
+				-> where ('plat', $plat)
+				-> update (['isAssigned' => 1]);
+
 			$tpa = DB::select('SELECT * from tpa');
 			$tps = DB::select('SELECT * from tps');
 			$sarana = DB::select('SELECT * from sarana');
-			return view('formPenjadwalanSarana')->with('tpa', $tpa)->with('tps', $tps)->with('sarana', $sarana);
+			$mytime = Carbon::now('Asia/Jakarta')->addDay()->toDateString();
+			$mytime2 = Carbon::now('Asia/Jakarta')->toDateString();
+			return view('formPenjadwalanSarana')->with('Date', $mytime)->with('Date2', $mytime2)->with('TPA', $tpa)->with('TPS', $tps)->with('sarana', $sarana);
 		}
 		public function resetJadwal(){
 			DB::table('petugas')
@@ -185,6 +232,18 @@ use Session;
 
 			$mytime = Carbon::now('Asia/Jakarta')->toDateString();
 			return view('viewSchedule')->with('Jadwal', $Jadwal)->with('Date', $mytime)->with('Petugas', $Petugas)->with('TPA', $TPA)->with('TPS', $TPS);;
+		}
+		public function resetJadwalSarana(){
+			DB::table('sarana')
+				-> update (['isAssigned' => 0]);
+			DB::table('jadwal_sarana')->delete();
+			$Petugas = Petugas::all();
+			$TPA = TPA::all();
+			$TPS = TPS::all();
+			$Jadwal = Jadwal::all();
+			$Jadwal_Sarana = Jadwal_Sarana::all();
+			$mytime = Carbon::now('Asia/Jakarta')->toDateString();
+			return view('viewSchedule')->with('Jadwal', $Jadwal)->with('Jadwal_Sarana', $Jadwal_Sarana)->with('Date', $mytime)->with('Petugas', $Petugas)->with('TPA', $TPA)->with('TPS', $TPS);;
 		}
 	}
 ?>

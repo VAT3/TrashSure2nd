@@ -93,18 +93,18 @@
                                 </div>
                                 <div class="row">
                                   <div class="col-sm-6 col-xs-6">
-                                    <p><i class="fa fa-database"></i>{{count($Petugas)}}</p>
+                                    <p><i class="fa fa-database"></i>{{$jumlahPAssigned + $jumlahPnonAssigned}}</p>
                                   </div>
                                 </div>
                                 <canvas id="serverstatus01" height="120" width="120"></canvas>
                                 <script>
                                     var doughnutData = [
                                             {
-                                                value: 67,
+                                                value: {{$jumlahPAssigned}},
                                                 color:"#68dff0"
                                             },
                                             {
-                                                value: 33,
+                                                value: {{$jumlahPnonAssigned}},
                                                 color: "#fdfdfd"
                                             }
                                         ];
@@ -128,11 +128,11 @@
                                 <script>
                                     var doughnutData = [
                                             {
-                                                value: 50,
+                                                value: {{$jumlahSAssigned}},
                                                 color:"#68dff0"
                                             },
                                             {
-                                                value: 50,
+                                                value: {{$jumlahSnonAssigned}},
                                                 color: "#fdfdfd"
                                             }
                                         ];
