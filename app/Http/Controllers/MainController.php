@@ -206,6 +206,11 @@ use Session;
 			DB::table('jadwal_sarana')->insert(array(
 			    array('tanggal' => $tanggal, 'durasi' => $durasi, 'jenis' => $jenis, 'lokasi' => $lokasi, 'plat' => $plat)
 			));
+
+			$plat = Request::input('sarana');
+			DB::table('sarana')
+				-> where ('plat', $plat)
+				-> update (['isAssigned' => 1]);
 			//return
 			$tpa = DB::select('SELECT * from tpa');
 			$tps = DB::select('SELECT * from tps');
