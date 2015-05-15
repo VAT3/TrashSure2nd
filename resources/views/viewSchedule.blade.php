@@ -90,14 +90,52 @@
                               @endforeach
                               </tbody>
                           </table>
-                          
                           <div>
-                        </div>
+                           <a href="{{url('resetJadwal')}}"><button class="btn btn-primary center"><i class="fa fa-pencil"></i> Reset Jadwal Petugas</button></a>
+                         </div>
                       </div><!-- /content-panel -->
                   </div><!-- /col-md-12 -->
-                  <div>
-                    <a href="{{url('resetJadwal')}}"><button class="btn btn-primary center"><i class="fa fa-pencil"></i> Reset Jadwal</button></a>
-                  </div>
+                  <div class="col-md-12">
+                      <div class="content-panel">
+                          <table class="table table-striped table-advance table-hover">
+                            <h4><i class="fa fa-angle-right"></i> Jadwal Sarana</h4>
+                            <hr>
+                              <thead>
+                              <tr>
+                                  <th><i class="fa fa-calendar"></i> Tanggal</th>
+                                  <th><i class="fa fa-bell"></i> Durasi</th>
+                                  <th><i class="fa fa-road"></i> Jenis</th>
+                                  <th><i class="fa fa-star"></i> Plat</th>
+                                  <th><i class="fa fa-map-marker"></i> Lokasi</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              @foreach ($Jadwal_Sarana as $jadwal_sarana)
+                                <tr>
+                                    @if ($jadwal_sarana->tanggal == $Date)
+                                    <td>{{$jadwal_sarana->tanggal}}</td>
+                                    <td>
+                                        {{$jadwal_sarana->durasi}}
+                                    </td>
+                                    <td>
+                                        {{$jadwal_sarana->jenis}}
+                                    </td>
+                                    <td>
+                                        {{$jadwal_sarana->plat}}
+                                    </td>
+                                    <td>
+                                        {{$jadwal_sarana->lokasi}}
+                                    </td>
+                                    @endif
+                                </tr>
+                              @endforeach
+                              </tbody>
+                          </table>
+                          <div>
+                           <a href="{{url('resetJadwalSarana')}}"><button class="btn btn-primary center"><i class="fa fa-pencil"></i> Reset Jadwal Sarana</button></a>
+                         </div>
+                      </div><!-- /content-panel -->
+                  </div><!-- /col-md-12 -->
               </div><!-- /row -->
       
     </section><! --/wrapper -->

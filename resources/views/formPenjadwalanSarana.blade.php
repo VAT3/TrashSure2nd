@@ -68,8 +68,8 @@
                                   <th><i class="fa fa-calendar"></i> Tanggal</th>
                                   <th><i class="fa fa-bell"></i> Durasi</th>
                                   <th><i class="fa fa-map-marker"></i> Lokasi</th>
-                                  <th><i class="fa fa-user"></i> Jenis</th>
-                                  <th><i class="fa fa-user"></i> Plat</th>
+                                  <th><i class="fa fa-road"></i> Jenis</th>
+                                  <th><i class="fa fa-star"></i> Plat</th>
                                   <th></th>
                               </tr>
                               </thead>
@@ -119,9 +119,7 @@
                                     <select class="form-control placeholder" name="jenis_sarana" type="text">
                                         <label>Jenis Sarana</label>
                                             <option value="" selected disabled>Jenis</option>
-                                            @foreach ($sarana as $saranaElement)
-                                            <option>{{$saranaElement->jenis}}</option>
-                                            @endforeach                                            
+                                            <option>Mobil Sampah</option>                                           
                                     </select>
                                   </td>
                                   <td>

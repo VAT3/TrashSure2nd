@@ -5,6 +5,7 @@ use App\TPS;
 use App\Sarana;
 use App\Petugas;
 use App\Jadwal;
+use App\Jadwal_Sarana;
 use App\Quotation;
 use Carbon\Carbon;
 use DB;
@@ -148,8 +149,9 @@ use Session;
 			$TPA = TPA::all();
 			$TPS = TPS::all();
 			$Jadwal = Jadwal::all();
+			$Jadwal_Sarana = Jadwal_Sarana::all();
 			$mytime = Carbon::now('Asia/Jakarta')->toDateString();
-			return view('viewSchedule')->with('Jadwal', $Jadwal)->with('Date', $mytime)->with('Petugas', $Petugas)->with('TPA', $TPA)->with('TPS', $TPS);
+			return view('viewSchedule')->with('Jadwal', $Jadwal)->with('Jadwal_Sarana', $Jadwal_Sarana)->with('Date', $mytime)->with('Petugas', $Petugas)->with('TPA', $TPA)->with('TPS', $TPS);
 		}
 		public function viewScheduleSelf(){
 			$Petugas = Petugas::all();
@@ -206,12 +208,12 @@ use Session;
 			DB::table('jadwal_sarana')->insert(array(
 			    array('tanggal' => $tanggal, 'durasi' => $durasi, 'jenis' => $jenis, 'lokasi' => $lokasi, 'plat' => $plat)
 			));
-
-			$plat = Request::input('sarana');
+			
+			$plat = Request::input('plat_sarana');
 			DB::table('sarana')
 				-> where ('plat', $plat)
 				-> update (['isAssigned' => 1]);
-			//return
+
 			$tpa = DB::select('SELECT * from tpa');
 			$tps = DB::select('SELECT * from tps');
 			$sarana = DB::select('SELECT * from sarana');
@@ -230,6 +232,18 @@ use Session;
 
 			$mytime = Carbon::now('Asia/Jakarta')->toDateString();
 			return view('viewSchedule')->with('Jadwal', $Jadwal)->with('Date', $mytime)->with('Petugas', $Petugas)->with('TPA', $TPA)->with('TPS', $TPS);;
+		}
+		public function resetJadwalSarana(){
+			DB::table('sarana')
+				-> update (['isAssigned' => 0]);
+			DB::table('jadwal_sarana')->delete();
+			$Petugas = Petugas::all();
+			$TPA = TPA::all();
+			$TPS = TPS::all();
+			$Jadwal = Jadwal::all();
+			$Jadwal_Sarana = Jadwal_Sarana::all();
+			$mytime = Carbon::now('Asia/Jakarta')->toDateString();
+			return view('viewSchedule')->with('Jadwal', $Jadwal)->with('Jadwal_Sarana', $Jadwal_Sarana)->with('Date', $mytime)->with('Petugas', $Petugas)->with('TPA', $TPA)->with('TPS', $TPS);;
 		}
 	}
 ?>

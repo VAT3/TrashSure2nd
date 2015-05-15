@@ -41,6 +41,7 @@ Route::get('/viewSchedule', 'MainController@viewSchedule');
 Route::get('/viewScheduleSelf', 'MainController@viewScheduleSelf');
 Route::get('/laporan', 'MainController@laporan');
 Route::get('/resetJadwal', 'MainController@resetJadwal');
+Route::get('/resetJadwalSarana', 'MainController@resetJadwalSarana');	
 
 //ADD
 Route::get('/addTPA', 'AddController@getAddTPA');
