@@ -104,7 +104,7 @@ use Session;
 		}
 		public function inventorySarana()
 		{
-			$TPA = TPA::all();
+			$$TPA = TPA::all();
 			$TPS = TPS::all();
 			$Sarana = Sarana::all();
 			$Petugas = Petugas::all();
@@ -119,9 +119,10 @@ use Session;
 			return view('inventoryPetugas')->with('TPA', $TPA)->with('TPS', $TPS)->with('Sarana', $Sarana)->with('Petugas', $Petugas);
 		}
 		public function schedule(){
-			$Petugas = Petugas::all();
 			$TPA = TPA::all();
 			$TPS = TPS::all();
+			$Sarana = Sarana::all();
+			$Petugas = Petugas::all();
 			$mytime = Carbon::now('Asia/Jakarta')->addDay()->toDateString();
 			$mytime2 = Carbon::now('Asia/Jakarta')->toDateString();
 			return view('schedule')->with('Date', $mytime)->with('Date2', $mytime2)->with('Petugas', $Petugas)->with('TPA', $TPA)->with('TPS', $TPS);
@@ -145,18 +146,20 @@ use Session;
 			return view('schedule')->with('Date', $mytime)->with('Date2', $mytime2)->with('Petugas', $Petugas)->with('TPA', $TPA)->with('TPS', $TPS);
 		}
 		public function viewSchedule(){
-			$Petugas = Petugas::all();
 			$TPA = TPA::all();
 			$TPS = TPS::all();
+			$Sarana = Sarana::all();
+			$Petugas = Petugas::all();
 			$Jadwal = Jadwal::all();
 			$Jadwal_Sarana = Jadwal_Sarana::all();
 			$mytime = Carbon::now('Asia/Jakarta')->toDateString();
 			return view('viewSchedule')->with('Jadwal', $Jadwal)->with('Jadwal_Sarana', $Jadwal_Sarana)->with('Date', $mytime)->with('Petugas', $Petugas)->with('TPA', $TPA)->with('TPS', $TPS);
 		}
 		public function viewScheduleSelf(){
-			$Petugas = Petugas::all();
 			$TPA = TPA::all();
 			$TPS = TPS::all();
+			$Sarana = Sarana::all();
+			$Petugas = Petugas::all();
 			$Jadwal = DB::table('jadwal')->where('petugas', Session::get('name'))->get();
 			$mytime = Carbon::now('Asia/Jakarta')->toDateString();
 			return view('viewScheduleSelf')->with('Jadwal', $Jadwal)->with('Date', $mytime)->with('Petugas', $Petugas)->with('TPA', $TPA)->with('TPS', $TPS);
@@ -225,10 +228,10 @@ use Session;
 			DB::table('petugas')
 				-> update (['isAssigned' => 0]);
 			DB::table('jadwal')->delete();
-			$Petugas = Petugas::all();
 			$TPA = TPA::all();
 			$TPS = TPS::all();
-			$Jadwal = Jadwal::all();
+			$Sarana = Sarana::all();
+			$Petugas = Petugas::all();
 
 			$mytime = Carbon::now('Asia/Jakarta')->toDateString();
 			return view('viewSchedule')->with('Jadwal', $Jadwal)->with('Date', $mytime)->with('Petugas', $Petugas)->with('TPA', $TPA)->with('TPS', $TPS);;
@@ -237,11 +240,11 @@ use Session;
 			DB::table('sarana')
 				-> update (['isAssigned' => 0]);
 			DB::table('jadwal_sarana')->delete();
-			$Petugas = Petugas::all();
 			$TPA = TPA::all();
 			$TPS = TPS::all();
-			$Jadwal = Jadwal::all();
-			$Jadwal_Sarana = Jadwal_Sarana::all();
+			$Sarana = Sarana::all();
+			$Petugas = Petugas::all();
+			$Jadwal_Sarana = jadwal_sarana::all();
 			$mytime = Carbon::now('Asia/Jakarta')->toDateString();
 			return view('viewSchedule')->with('Jadwal', $Jadwal)->with('Jadwal_Sarana', $Jadwal_Sarana)->with('Date', $mytime)->with('Petugas', $Petugas)->with('TPA', $TPA)->with('TPS', $TPS);;
 		}
